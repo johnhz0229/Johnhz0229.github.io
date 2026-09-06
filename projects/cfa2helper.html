@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CFA2 Helper — John Huang</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap"
+    rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --black: #0a0a0a;
+      --white: #fafafa;
+      --gray-100: #f4f4f4;
+      --gray-200: #e8e8e8;
+      --gray-400: #999;
+      --gray-600: #555;
+      --serif: 'DM Serif Display', Georgia, serif;
+      --mono: 'DM Mono', monospace;
+      --sans: 'Inter', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: transparent;
+      color: var(--black);
+      font-size: 16px;
+      line-height: 1.7;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    .bg-animation {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      z-index: -3;
+      background: linear-gradient(-45deg, #ffffff, #fbfcfe, #ffffff, #f8f9fb, #ffffff);
+      background-size: 400% 400%;
+      animation: gradientBG 20s ease infinite;
+    }
+
+    @keyframes gradientBG {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 3rem;
+      background: rgba(250, 250, 250, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      color: var(--black);
+    }
+
+    .nav-back {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      color: var(--gray-600);
+      text-decoration: none;
+      border-bottom: 1px solid var(--gray-200);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .nav-back:hover {
+      color: var(--black);
+      border-color: var(--black);
+    }
+
+    .wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 9rem 3rem 8rem;
+    }
+
+    /* HEADER */
+    .project-meta-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .meta-tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--gray-400);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: var(--gray-100);
+      padding: 3px 8px;
+      border-radius: 2px;
+    }
+
+    .meta-tag.research {
+      color: #5a7a8f;
+      background: #f0f5f9;
+    }
+
+    .project-title {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 400;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+
+    .project-subtitle {
+      font-size: 1.05rem;
+      color: var(--gray-600);
+      line-height: 1.75;
+      font-weight: 300;
+      margin-bottom: 2rem;
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    .link-row {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .proj-link {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--black);
+      text-decoration: none;
+      border-bottom: 1px solid var(--gray-400);
+      padding-bottom: 2px;
+      transition: opacity 0.2s;
+    }
+
+    .proj-link:hover { opacity: 0.45; }
+
+    /* SECTION HEADERS */
+    .section-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      margin-bottom: 1.25rem;
+      margin-top: 3.5rem;
+    }
+
+    h2 {
+      font-family: var(--serif);
+      font-size: 1.45rem;
+      font-weight: 400;
+      margin-bottom: 1rem;
+      line-height: 1.3;
+    }
+
+    p {
+      font-size: 1rem;
+      line-height: 1.85;
+      font-weight: 300;
+      color: #1a1a1a;
+      margin-bottom: 1.25rem;
+    }
+
+    /* RESULT BOX */
+    .result-box {
+      border: 1px solid var(--gray-200);
+      border-radius: 6px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+      background: #f9fafb;
+    }
+
+    .result-box h4 {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      margin-bottom: 0.75rem;
+    }
+
+    .result-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .result-row:last-child { margin-bottom: 0; }
+
+    .result-item {
+      font-family: var(--mono);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .result-label {
+      color: var(--gray-400);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .result-value {
+      color: var(--black);
+      font-weight: 500;
+      margin-top: 0.2rem;
+    }
+
+    /* METHODOLOGY */
+    .methodology-step {
+      display: grid;
+      grid-template-columns: 2rem 1fr;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      align-items: start;
+    }
+
+    .step-num {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--gray-400);
+      padding-top: 3px;
+    }
+
+    .step-body strong {
+      font-weight: 500;
+      font-size: 0.95rem;
+      display: block;
+      margin-bottom: 0.2rem;
+    }
+
+    .step-body p {
+      font-size: 0.9rem;
+      color: var(--gray-600);
+      margin-bottom: 0;
+      line-height: 1.65;
+    }
+
+    /* TAG ROW */
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      padding: 4px 10px;
+      background: var(--gray-100);
+      border: 1px solid var(--gray-200);
+      border-radius: 2px;
+      color: var(--gray-600);
+    }
+
+    /* NOTE */
+    .note {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--gray-400);
+      line-height: 1.6;
+      border-left: 2px solid var(--gray-200);
+      padding-left: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 1rem 1.5rem; }
+      .wrap { padding: 7rem 1.5rem 5rem; }
+      .result-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg-animation"></div>
+
+  <nav>
+    <a href="../index.html" class="nav-logo">JH</a>
+    <a href="../index.html#projects" class="nav-back">← Projects</a>
+  </nav>
+
+  <main class="wrap">
+
+    <div class="project-meta-header">
+      <span class="meta-tag">Personal Project</span>
+      <span class="meta-tag research">AI / RAG</span>
+    </div>
+
+    <h1 class="project-title">CFA2 Helper</h1>
+
+    <p class="project-subtitle">
+      A lightweight end-to-end RAG study assistant for CFA Level II preparation — built from scratch:
+      PDF ingestion, hybrid retrieval with reranking, grounded answer generation with citations, and a web UI.
+      Answers in Chinese or English, at ~2 seconds per query, entirely on local models except the LLM call.
+    </p>
+
+    <div class="link-row">
+      <a href="https://github.com/Johnhz0229/cfa2helper" target="_blank" class="proj-link">GitHub ↗</a>
+      <a href="https://github.com/Johnhz0229/cfa2helper/blob/main/docs/cfa2helper_deck.pdf" target="_blank" class="proj-link">Project Deck (PDF) ↗</a>
+    </div>
+
+    <div class="tag-row">
+      <span class="tag">Python</span>
+      <span class="tag">RAG</span>
+      <span class="tag">DeepSeek</span>
+      <span class="tag">bge-m3</span>
+      <span class="tag">bge-reranker-v2-m3</span>
+      <span class="tag">Streamlit</span>
+    </div>
+
+    <!-- MOTIVATION -->
+    <div class="section-label">Motivation</div>
+    <h2>Answers You Can Check</h2>
+    <p>
+      CFA Level II spans thousands of pages of curriculum. Off-the-shelf assistants hallucinate and cite nothing.
+      This project builds the retrieval pipeline from scratch so every answer is grounded in the study corpus and
+      cites its source down to the passage level — with an optional "genetic" mode that explains how each concept
+      was discovered historically.
+    </p>
+
+    <!-- METHODOLOGY -->
+    <div class="section-label">Architecture</div>
+    <h2>From PDF to Cited Answer</h2>
+
+    <div class="methodology-step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <strong>Ingestion</strong>
+        <p>PDFs converted to retrieval-friendly Markdown with YAML metadata (pymupdf4llm);
+        corpus chunked by paragraph with sentence-boundary fallback for long blocks.</p>
+      </div>
+    </div>
+
+    <div class="methodology-step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <strong>Hybrid Retrieval</strong>
+        <p>BM25-style keyword search (IDF-weighted unigrams + bigrams) fused with multilingual dense
+        embeddings (bge-m3) via reciprocal rank fusion — ~1s per query.</p>
+      </div>
+    </div>
+
+    <div class="methodology-step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <strong>Reranking</strong>
+        <p>Top-20 candidates precision-reranked by a cross-encoder (bge-reranker-v2-m3).</p>
+      </div>
+    </div>
+
+    <div class="methodology-step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <strong>Grounded Generation</strong>
+        <p>DeepSeek API (OpenAI-compatible) with strict anti-hallucination prompting, passage-level
+        citations [P1234], and a notes-first / web-supplements rule; optional live web search.</p>
+      </div>
+    </div>
+
+    <div class="methodology-step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <strong>UI &amp; Preferences</strong>
+        <p>Streamlit web UI or CLI; filter by topic or corpus and boost a preferred source
+        (e.g. official curriculum over prep notes).</p>
+      </div>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="section-label">Results</div>
+    <h2>Measured Retrieval Quality</h2>
+
+    <div class="result-box">
+      <h4>40-Question Golden Set · 10 CFA Topics</h4>
+      <div class="result-row">
+        <div class="result-item">
+          <div class="result-label">MRR</div>
+          <div class="result-value">0.94</div>
+        </div>
+        <div class="result-item">
+          <div class="result-label">hit@1</div>
+          <div class="result-value">92%</div>
+        </div>
+      </div>
+      <div class="result-row">
+        <div class="result-item">
+          <div class="result-label">hit@5</div>
+          <div class="result-value">98%</div>
+        </div>
+        <div class="result-item">
+          <div class="result-label">Latency (warm, MPS)</div>
+          <div class="result-value">1–2s</div>
+        </div>
+      </div>
+      <div class="result-row">
+        <div class="result-item">
+          <div class="result-label">Corpus Scale Tested</div>
+          <div class="result-value">50,000+ passages</div>
+        </div>
+        <div class="result-item">
+          <div class="result-label">Without Rerank (Ablation)</div>
+          <div class="result-value">MRR 0.91 / hit@1 88%</div>
+        </div>
+      </div>
+    </div>
+
+    <p>
+      Evaluation is built into the pipeline: 40 golden questions with expected sources labeled, hit@k and MRR
+      metrics, and rerank ablation. Multilingual retrieval handles questions in either language across three
+      corpora (English prep notes, English official curriculum, Chinese textbook).
+    </p>
+
+    <p class="note">
+      The copyrighted study corpora are intentionally not included; the repo ships a small original demo corpus
+      so the pipeline runs out of the box. The project deck (7 slides) covers design decisions, pitfalls found
+      and fixed, and measured results.
+    </p>
+
+  </main>
+</body>
+
+</html>
